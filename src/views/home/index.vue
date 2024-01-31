@@ -1,7 +1,5 @@
 <script setup></script>
-
 <template>
-  <RouterView />
+  <navbar />
+  <div>我是Home</div>
 </template>
-
-<style scoped></style>
