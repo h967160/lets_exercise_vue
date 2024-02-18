@@ -9,7 +9,7 @@ export default {
     email: '輸入格式錯誤',
     regex: '輸入格式不符合要求',
     max: `不得超過 0:{length} 字元`,
-    min: `不得 0:{length} 字元`,
+    min: `不得少於 0:{length} 字元`,
     confirmed: '兩次輸入的密碼不一致',
     beforeToday: '所選日期必須早於今日',
     beforeBadmintonStart: '請選擇今日或之前的日期'
@@ -34,6 +34,10 @@ defineRule('beforeToday', (value) => {
 
 // 接觸羽毛球時間驗證
 defineRule('beforeBadmintonStart', (value) => {
+  // 如果日期未填寫，不進行驗證
+  if (!value) {
+    return true
+  }
   const selectedDate = new Date(value)
   const today = new Date()
   return selectedDate.setHours(0, 0, 0, 0) <= today.setHours(0, 0, 0, 0)
