@@ -1,13 +1,60 @@
 <script setup>
-const onSubmit = (values) => {
-  console.log(values)
+import { registerUser } from '@/apis/user'
+import { ref } from 'vue'
+
+const userData = ref({
+  lastName: '',
+  firstName: '',
+  nickName: '',
+  account: '',
+  password: '',
+  checkPassword: '',
+  nationalId: '',
+  email: '',
+  gender: '',
+  birthdate: '',
+  phoneNumber: '',
+  playSince: null,
+  introduction: '',
+  avatar: ''
+})
+
+const register = async () => {
+  // console.log('Register function called')
+  // console.log('Sending data to server:', userData.value)
+  try {
+    const result = await registerUser(userData.value)
+    console.log('註冊成功', result)
+  } catch (error) {
+    console.error('註冊失敗', error)
+  }
+}
+const fillTestData = () => {
+  // 一鍵輸入方便測試
+  userData.value = {
+    lastName: 'White',
+    firstName: 'Anna',
+    nickName: 'Ann',
+    account: 'test15',
+    password: 'Test1111',
+    checkPassword: 'Test1111',
+    nationalId: 'H223456787',
+    email: 'test15@test.com',
+    gender: 'female',
+    birthdate: '1995-01-14',
+    phoneNumber: '0922345671',
+    playSince: null,
+    introduction: '',
+    avatar: ''
+  }
 }
 </script>
 <template>
   <div class="container">
     <div class="row d-flex justify-content-center">
       <div class="col-6 my-3 border border-secondary">
-        <VForm @submit="onSubmit" v-slot="{ errors }" class="register-form m-3 p-3">
+        <VForm @submit="register" v-slot="{ errors }" class="register-form m-3 p-3">
+          <button @click.prevent="fillTestData" class="btn btn-dark">一鍵輸入</button>
           <div class="mb-3">
             <div class="input-group mb-3 flex-nowrap">
               <div class="pe-3">
@@ -19,8 +66,8 @@ const onSubmit = (values) => {
                   class="form-control"
                   name="lastName"
                   id="lastName"
-                  maxlength="20"
                   placeholder="請輸入您的姓氏"
+                  v-model="userData.lastName"
                   rules="required|max:20"
                   :class="{ 'is-invalid': errors.lastName }"
                 />
@@ -36,6 +83,7 @@ const onSubmit = (values) => {
                   name="firstName"
                   id="firstName"
                   placeholder="請輸入您的名字"
+                  v-model="userData.firstName"
                   rules="required|max:20"
                   :class="{ 'is-invalid': errors['firstName'] }"
                 />
@@ -49,6 +97,7 @@ const onSubmit = (values) => {
                   id="nickName"
                   name="nickName"
                   placeholder="請輸入您的暱稱"
+                  v-model="userData.nickName"
                   rules="max:20"
                   :class="{ 'is-invalid': errors['nickName'] }"
                 />
@@ -67,6 +116,7 @@ const onSubmit = (values) => {
               id="account"
               name="account"
               placeholder="請輸入至少6個英數字組成的帳號"
+              v-model="userData.account"
               :rules="{ required: true, min: 6, max: 50, regex: /^(?=.*[a-zA-Z])(?=.*\d).{6,}$/ }"
               :class="{ 'is-invalid': errors['account'] }"
             />
@@ -83,6 +133,7 @@ const onSubmit = (values) => {
               id="password"
               name="password"
               placeholder="請輸入最少8個字元，需包含至少一個大寫英文字母和一個數字"
+              v-model="userData.password"
               :rules="{ required: true, min: 8, max: 20, regex: /^(?=.*[A-Z])(?=.*\d).{8,20}$/ }"
               :class="{ 'is-invalid': errors['password'] }"
             />
@@ -98,6 +149,7 @@ const onSubmit = (values) => {
               id="checkPassword"
               name="checkPassword"
               placeholder="請再輸入一次密碼"
+              v-model="userData.checkPassword"
               rules="required|confirmed:@password"
               :class="{ 'is-invalid': errors['checkPassword'] }"
             />
@@ -113,6 +165,7 @@ const onSubmit = (values) => {
               id="nationalId"
               name="nationalId"
               placeholder="請輸入正確的身分證字號（第一碼為大寫英文字母）"
+              v-model="userData.nationalId"
               :rules="{ required: true, max: 10, regex: /^[A-Za-z][12]\d{8}$/ }"
               :class="{ 'is-invalid': errors['nationalId'] }"
             />
@@ -128,7 +181,8 @@ const onSubmit = (values) => {
               id="email"
               name="email"
               placeholder="請輸入有效的Email"
-              rules="required|email"
+              v-model="userData.email"
+              rules="required|email|max:100"
               :class="{ 'is-invalid': errors['email'] }"
             />
             <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage>
@@ -142,27 +196,29 @@ const onSubmit = (values) => {
               type="radio"
               name="gender"
               value="male"
+              v-model="userData.gender"
               rules="required"
               :class="{ 'is-invalid': errors['gender'] }"
             />
             <span class="ps-1 pe-2">男性</span>
-            <VField type="radio" name="gender" value="female" />
+            <VField type="radio" name="gender" value="female" v-model="userData.gender" />
             <span class="ps-1">女性</span>
             <ErrorMessage name="gender" class="invalid-feedback"></ErrorMessage>
           </div>
           <div class="mb-3">
-            <label for="birthday" class="form-label"
+            <label for="birthdate" class="form-label"
               >出生日期<span class="text-danger px-1">*</span></label
             >
             <VField
               type="date"
               class="form-control"
-              id="birthday"
-              name="birthday"
+              id="birthdate"
+              name="birthdate"
+              v-model="userData.birthdate"
               rules="required|beforeToday"
-              :class="{ 'is-invalid': errors['birthday'] }"
+              :class="{ 'is-invalid': errors['birthdate'] }"
             />
-            <ErrorMessage name="birthday" class="invalid-feedback"></ErrorMessage>
+            <ErrorMessage name="birthdate" class="invalid-feedback"></ErrorMessage>
           </div>
           <div class="mb-3">
             <label for="phoneNumber" class="form-label"
@@ -174,6 +230,7 @@ const onSubmit = (values) => {
               id="phoneNumber"
               name="phoneNumber"
               placeholder="請輸入正確的手機號碼（例如：0912345678）"
+              v-model="userData.phoneNumber"
               :rules="{ required: true, max: 10, regex: /^09\d{8}$/ }"
               :class="{ 'is-invalid': errors['phoneNumber'] }"
             />
@@ -186,7 +243,8 @@ const onSubmit = (values) => {
               class="form-control"
               id="playSince"
               name="playSince"
-              value="2023-01-01"
+              value=""
+              v-model="userData.playSince"
               rules="beforeBadmintonStart"
               :class="{ 'is-invalid': errors['playSince'] }"
             />
@@ -201,6 +259,7 @@ const onSubmit = (values) => {
               name="introduction"
               id="introduction"
               placeholder="請輸入您的個人簡介（最多150字元）"
+              v-model="userData.introduction"
               rules="max:150"
               :class="{ 'is-invalid': errors['introduction'] }"
             />
