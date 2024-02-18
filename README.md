@@ -1,35 +1,54 @@
-# lets_exercise_vue
+# Lets Exercise 專案介紹
 
-This template should help get you started developing with Vue 3 in Vite.
+想打球卻找不到朋友陪你一起打嗎？或有人有球技，卻不知道要去哪裡打球嗎？這個運動揪團網通通幫你解決這些問題！
 
-## Recommended IDE Setup
+此專案是以前後端分離開發模式進行，前端使用vue.js作為框架，後端則是使用node.js express架設伺服器，搭配MySQL做資料存放。
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+後端專案為：[let_exercise](https://github.com/kim1037/lets_exercise)。
 
-## Customize configuration
+## Prerequisites - 開發環境
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- 開發工具：Visual Studio Code v1.60.2
+- 框架：Vue.js v3.3.11
+- 專案建構工具：Vite v5.0.10
 
-## Project Setup
+## Used Packages - 使用套件
 
-```sh
+- Bootstrap v5.1.3
+- FontAwesome v6.5.1
+- Axios v1.6.7
+- Pinia v2.1.7
+- VeeValidate v4.12.5
+- Vue Router v4.2.5
+
+## Installation and execution - 安裝與執行步驟
+
+1. 開啟終端機（Terminal）， clone 此專案至本機電腦。
+
+```
+git clone https://github.com/h967160/lets_exercise_vue.git
+```
+
+2. 開啟終端機（Terminal），進入存放此專案的資料夾。
+
+```
+cd lets_exercise_vue
+```
+
+3. 安裝所需套件 - 請參見 package.json
+
+```
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+4. 啟動伺服器
 
-```sh
+```
 npm run dev
 ```
 
-### Compile and Minify for Production
+5. 當 terminal 出現以下字樣，表示伺服器已啟動
 
-```sh
-npm run build
 ```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
+Local:   http://localhost:8080/
 ```
