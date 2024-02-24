@@ -1,6 +1,6 @@
 <script setup>
-import LayoutNav from './Layout/components/layout-nav.vue'
-import LayoutFooter from './Layout/components/layout-footer.vue'
+import LayoutNav from './layout/components/layout-nav.vue'
+import LayoutFooter from './layout/components/layout-footer.vue'
 </script>
 <template>
   <div>
